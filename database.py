@@ -9,6 +9,8 @@ import asyncio
 MONGO_API_KEY = config('MONGO_API_KEY') #パッケージをインポートしてconfig('SECRET_KEY')のようにして.envから値を読み込む。
 
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_API_KEY)
+client.get_io_loop = asyncio.get_event_loop
+
 database = client.API_DB
 collection_todo = database.todo
 collection_user = database.user
