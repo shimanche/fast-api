@@ -66,11 +66,13 @@ async def delete_todo(id:str):
   raise HTTPException(
     status_code=404,detail="Delete task failed"
   )
-  
+
+'''
 @router.get("/api/csv")
 async def get_csv():
   res = await read_csv()
   return res
+'''
   
   
   
