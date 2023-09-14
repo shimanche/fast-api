@@ -1,0 +1,5 @@
+.env
+__pycache__
+memo.md
+requirements--@.txt
+main---@.py
