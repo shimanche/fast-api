@@ -26,7 +26,7 @@ def user_serializer(user) -> dict:
     "email":user["email"],
   }
 
-async def db_create_todo(data:dict) -> dict|bool: # 引数辞書型、返り値辞書型
+async def db_create_todo(data:dict) -> Union[dict, bool]: # 引数辞書型、返り値辞書型
   todo = await collection_todo.insert_one(data) #motorの返り値は insert_oneクラスのインスタンス
   new_todo = await collection_todo.find_one({"_id":todo.inserted_id }) #上記で作ったtodoのインスタンスに.inserted_idでアクセスするとidが取得できる
   #上記の返り値は、trueなら値。falseならNoneが返却される.ただし、値のidがMongoの特殊なobjectIDなのでそれを辞書型で返す関数を定義する
@@ -41,13 +41,13 @@ async def db_get_todos() -> list:
     todos.append(todo_serializer(todo))
   return todos
 
-async def db_get_single_todo(id:str) -> dict|bool: # 引数辞書型、返り値辞書型
+async def db_get_single_todo(id:str) -> Union[dict, bool]: # 引数辞書型、返り値辞書型
   todo = await collection_todo.find_one({"_id":ObjectId(id)})
   if todo: 
     return todo_serializer(todo)
   return  False
 
-async def db_update_todo(id:str, data:dict) -> dict|bool: # 引数辞書型、返り値辞書型
+async def db_update_todo(id:str, data:dict) -> Union[dict, bool]: # 引数辞書型、返り値辞書型
   find_todo = await collection_todo.find_one({"_id":ObjectId(id)})
   if find_todo:
     update_todo = await collection_todo.update_one({"_id":ObjectId(id)},{"$set":data})
